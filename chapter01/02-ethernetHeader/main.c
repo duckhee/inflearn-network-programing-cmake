@@ -133,5 +133,5 @@ void PacketHandler(u_char *param, const struct pcap_pkthdr *header, const u_char
             pEthernetHeader->srcMac[3], pEthernetHeader->srcMac[4], pEthernetHeader->srcMac[5],
             pEthernetHeader->dstMac[0], pEthernetHeader->dstMac[1], pEthernetHeader->dstMac[2],
             pEthernetHeader->dstMac[3], pEthernetHeader->dstMac[4], pEthernetHeader->dstMac[5],
-            htons(pEthernetHeader->type));
+            ntohs(pEthernetHeader->type));
 }
