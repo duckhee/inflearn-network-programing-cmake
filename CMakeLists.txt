@@ -19,3 +19,4 @@ if (WIN32 OR WIN64)
 endif ()
 
 add_subdirectory(chapter01)
+add_subdirectory(chapter02)
