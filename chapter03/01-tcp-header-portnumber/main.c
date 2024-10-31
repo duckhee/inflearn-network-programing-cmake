@@ -134,20 +134,22 @@ void DispatcherHandler(u_char* param, const struct pcap_pkthdr* header, const u_
            pIpHeader->dstIp[2], pIpHeader->dstIp[3],
            ntohs(pTcpHeader->dstPort)
     );
-
+    // 3way handshake 의 시작 SYN
     if (pTcpHeader->flags == 0x02)
     {
         puts("SYN");
     }
+    // 3way handshake client 연결 시도 확인
     else if (pTcpHeader->flags == 0x12)
     {
         puts("SYN + ACK");
     }
+    // 3way handshake server 연결 상태 확인
     else if (pTcpHeader->flags == 0x10)
     {
         puts("ACK");
     }
-
+    // connection close 요청
     if (pTcpHeader->flags & 0x04)
     {
         puts("*RST");
