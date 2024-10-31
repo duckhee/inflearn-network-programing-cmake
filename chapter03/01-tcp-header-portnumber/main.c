@@ -149,7 +149,7 @@ void DispatcherHandler(u_char* param, const struct pcap_pkthdr* header, const u_
     {
         puts("ACK");
     }
-    // connection close 요청
+    // 비정상 종료 요청 확인
     if (pTcpHeader->flags & 0x04)
     {
         puts("*RST");
