@@ -138,36 +138,40 @@ int main(int argc, char **argv) {
 
 void packetHandler(u_char *param, const struct pcap_pkthdr *header, const u_char *pkt_data) {
     EtherHeader_t *pEther = (EtherHeader_t *) pkt_data;
-
+    /** Ethernet가  L3 Frame의 어떤 타입을 감싸고 있는지 확인 IP 인지 확인 */
     if (pEther->type != htons(0x0800)) {
         return;
     }
-
+    /** IpHeader 위치 가져오기 */
     IPHeader_t *pIpHeader = (IPHeader_t *) (pkt_data + sizeof(EtherHeader_t));
-
+    /** IPv4인지 확인 */
     if (pIpHeader->protocol != 6) {
         return;
     }
-
+    /** ip header의 크기를 가져온다. */
     int ipHeaderLen = (pIpHeader->verIhl & 0x0f) * 4;
-
+    /** TCP Header 가져오기 */
     TcpHeader_t *pTcp = (TcpHeader_t *) (pkt_data + sizeof(EtherHeader_t) + ipHeaderLen);
-
+    /** 출발지 또는 목적지 포트 확인 */
     if (ntohs(pTcp->srcPort) != 25000 || ntohs(pTcp->dstPort) != 25000) {
         return;
     }
+    /** 아이피 주소 및 포트 출력 */
     printf("%d.%d.%d.%d:%d -> %d.%d.%d.%d:%d\r\n",
            pIpHeader->srcIp[0], pIpHeader->srcIp[1], pIpHeader->srcIp[2], pIpHeader->srcIp[3], pTcp->srcPort,
            pIpHeader->dstIp[0], pIpHeader->dstIp[1], pIpHeader->dstIp[2], pIpHeader->dstIp[3], pTcp->dstPort
     );
 
+    /** TCP Header의 길이 가져오기 */
     int tcpHeaderSize = ((pTcp->data >> 4 & 0x0F) * 4);
+    /** segment 가져오기 */
     char *pPayload = (char *) (pkt_data + sizeof(EtherHeader_t) + ipHeaderLen + tcpHeaderSize);
 
     printf("Segment size : %d(Frame Length : %d)\r\n",
            ntohs(pIpHeader->length) - ipHeaderLen - tcpHeaderSize,
            header->len);
 
+    /** TCP Message 가져오기 */
     char szMessage[2048] = {0};
     memcpy_s(szMessage, sizeof(szMessage), pPayload,
              ntohs(pIpHeader->length) - ipHeaderLen - tcpHeaderSize);
