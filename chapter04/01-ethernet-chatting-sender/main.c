@@ -132,8 +132,7 @@ int main(int argc, char* argv[])
     /* Open the adapter */
     if ((adhandle = pcap_open_live(d->name, // name of the device
                                    0, // portion of the packet to capture. 0 == no capture.
-                                   0,
-            // 무차별 전달할 수 있도록 설정하는 것 (none-promiscuous mode) 자기 자신에 해당이 되는 것만 패킷을 보도록 하는 것(promiscuous mode)
+                                   0, // 무차별 전달할 수 있도록 설정하는 것 (none-promiscuous mode) 자기 자신에 해당이 되는 것만 패킷을 보도록 하는 것(promiscuous mode)
                                    1000, // read timeout
                                    errbuf // error buffer
     )) == NULL)
