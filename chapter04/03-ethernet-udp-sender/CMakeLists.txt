@@ -8,6 +8,7 @@ add_executable(chapter0403EthernetUDPSender)
 
 if (WIN32 OR WIN64)
     target_link_libraries(chapter0403EthernetUDPSender LINK_PRIVATE
+            ${NPCAP}
             wsock32
             ws2_32
     )
