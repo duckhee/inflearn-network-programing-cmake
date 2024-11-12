@@ -184,7 +184,7 @@ DWORD WINAPI SenderThread(PVOID pParam)
     inet_ntop(PF_INET, &remoteAddr.sin_addr, ipBuffer, sizeof(ipBuffer));
 
     puts("*** new client ***");
-    while ((nReceive = ::recv(hClient, msgBuffer, sizeof(msgBuffer), 0) > 0))
+    while ((nReceive = ::recv(hClient, msgBuffer, sizeof(msgBuffer), 0)) > 0)
     {
         printf("%s: %s\r\n", ipBuffer, msgBuffer);
         SendChattingMessage(msgBuffer);

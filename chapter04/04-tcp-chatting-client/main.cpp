@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     SOCKADDR_IN serverAddr = {0,};
     serverAddr.sin_family = PF_INET;
-    inet_pton(PF_INET, "192.168.45.51", &serverAddr.sin_addr);
+    inet_pton(PF_INET, "192.168.45.74", &serverAddr.sin_addr);
     serverAddr.sin_port = htons(25000);
 
     if (::connect(hClient, (SOCKADDR *) &serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
